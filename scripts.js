@@ -9,6 +9,7 @@ let noughtsPlayer = document.querySelector(".player-one");
 let crossesPlayer = document.querySelector(".player-two");
 let buttonSection = document.querySelector(".buttons");
 let scoreSection = document.querySelector(".score");
+let resetSection = document.querySelector(".reset")
 
 const gameboard = (() => {
 
@@ -27,11 +28,11 @@ const gameboard = (() => {
 
         }
         
-        return array;
+        return { array };
 
     }
 
-    return { generateArray };
+    return { generateArray, array, };
 
 })();
 
@@ -87,23 +88,27 @@ function game(playerOne, playerTwo) {
 
     const newBoard = gameboard.generateArray();
 
+    let winState = false;
+
     const checkScore = () => {
 
         let scoreText = document.createElement('p');
         scoreSection.appendChild(scoreText);
 
-        if ((newBoard[0] === "X" && newBoard[1] === "X" && newBoard[2] === "X") 
-            || (newBoard[3] === "X" && newBoard[4] === "X" && newBoard[5] === "X")
-            || (newBoard[6] === "X" && newBoard[7] === "X" && newBoard[8] === "X")
-            || (newBoard[0] === "X" && newBoard[3] === "X" && newBoard[6] === "X")
-            || (newBoard[4] === "X" && newBoard[7] === "X" && newBoard[3] === "X")
-            || (newBoard[2] === "X" && newBoard[5] === "X" && newBoard[8] === "X")
-            || (newBoard[0] === "X" && newBoard[4] === "X" && newBoard[8] === "X")
-            || (newBoard[2] === "X" && newBoard[4] === "X" && newBoard[6] === "X")) {
+        if ((newBoard.array[0] === "X" && newBoard.array[1] === "X" && newBoard.array[2] === "X") 
+            || (newBoard.array[3] === "X" && newBoard.array[4] === "X" && newBoard.array[5] === "X")
+            || (newBoard.array[6] === "X" && newBoard.array[7] === "X" && newBoard.array[8] === "X")
+            || (newBoard.array[0] === "X" && newBoard.array[3] === "X" && newBoard.array[6] === "X")
+            || (newBoard.array[4] === "X" && newBoard.array[7] === "X" && newBoard.array[3] === "X")
+            || (newBoard.array[2] === "X" && newBoard.array[5] === "X" && newBoard.array[8] === "X")
+            || (newBoard.array[0] === "X" && newBoard.array[4] === "X" && newBoard.array[8] === "X")
+            || (newBoard.array[2] === "X" && newBoard.array[4] === "X" && newBoard.array[6] === "X")) {
+
+                winState = true;
 
                 if (playerOne.noughtOrCross === "X") {
                     playerOne.increaseScore();
-                    scoreText.textContent = `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`;
+                    scoreText.textContent = `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`; 
                 }
 
                 else if (playerTwo.noughtOrCross === "X") {
@@ -113,14 +118,16 @@ function game(playerOne, playerTwo) {
 
             }
 
-        else if ((newBoard[0] === "0" && newBoard[1] === "0" && newBoard[2] === "0") 
-            || (newBoard[3] === "0" && newBoard[4] === "0" && newBoard[5] === "0")
-            || (newBoard[6] === "0" && newBoard[7] === "0" && newBoard[8] === "0")
-            || (newBoard[0] === "0" && newBoard[3] === "0" && newBoard[6] === "0")
-            || (newBoard[4] === "0" && newBoard[7] === "0" && newBoard[3] === "0")
-            || (newBoard[2] === "0" && newBoard[5] === "0" && newBoard[8] === "0")
-            || (newBoard[0] === "0" && newBoard[4] === "0" && newBoard[8] === "0")
-            || (newBoard[2] === "0" && newBoard[4] === "0" && newBoard[6] === "0")) {
+        else if ((newBoard.array[0] === "0" && newBoard.array[1] === "0" && newBoard.array[2] === "0") 
+            || (newBoard.array[3] === "0" && newBoard.array[4] === "0" && newBoard.array[5] === "0")
+            || (newBoard.array[6] === "0" && newBoard.array[7] === "0" && newBoard.array[8] === "0")
+            || (newBoard.array[0] === "0" && newBoard.array[3] === "0" && newBoard.array[6] === "0")
+            || (newBoard.array[4] === "0" && newBoard.array[7] === "0" && newBoard.array[3] === "0")
+            || (newBoard.array[2] === "0" && newBoard.array[5] === "0" && newBoard.array[8] === "0")
+            || (newBoard.array[0] === "0" && newBoard.array[4] === "0" && newBoard.array[8] === "0")
+            || (newBoard.array[2] === "0" && newBoard.array[4] === "0" && newBoard.array[6] === "0")) {
+
+                winState = true;
 
                 if (playerOne.noughtOrCross === "0") {
                     playerOne.increaseScore();
@@ -135,48 +142,63 @@ function game(playerOne, playerTwo) {
             }
 
         else {
+            winState = false;
             scoreText.textContent = "No one has won yet! Keep playing.";
         }
-
-            for (let i = 0; i < newBoard.length; i++) {
-                newBoard[i] = '';
-            }
-
-        }
-
-        const resetBoard = () => {
-
-            for (let i = 0; i < newBoard.length; i++) {
-                newBoard[i] = '';
-            }
-
-            return newBoard;
 
         }
 
     let gameButtons = document.querySelectorAll(".player-square");
 
+     const resetBoard = () => {
+
+            for (let i = 0; i < newBoard.length; i++) {
+                newBoard[i] = '';
+            }
+
+            for (let i = 0; i < gameButtons.length; i++) {
+                gameButtons[i].textContent = '';
+            }
+
+            scoreSection.replaceChildren();
+
+            return newBoard;
+
+        }
+
     for (let i = 0; i < gameButtons.length; i++) {
         gameButtons[i].addEventListener('click', () => {
 
-            if (noughtsPlayer.dataset.active === "true" && gameButtons[i].textContent === "") {
-                gameButtons[i].textContent = "0";
-                newBoard[i] = "0";
-                noughtsPlayer.dataset.active = "false";
-                crossesPlayer.dataset.active = "true";
-                crossesPlayer.style.backgroundColor = "red"
-                noughtsPlayer.style.backgroundColor = "white";
-                checkScore();
-            }
+            if (winState === false) {
 
-            else if (crossesPlayer.dataset.active === "true" && gameButtons[i].textContent === "") {
-                gameButtons[i].textContent = "X";
-                newBoard[i] = "X"
-                noughtsPlayer.dataset.active = "true";
-                crossesPlayer.dataset.active = "false";
-                crossesPlayer.style.backgroundColor = "white"
-                noughtsPlayer.style.backgroundColor = "red";
-                checkScore()
+                if (noughtsPlayer.dataset.active === "true" && gameButtons[i].textContent === "") {
+                    gameButtons[i].textContent = "0";
+                    newBoard.array[i] = "0";
+                    noughtsPlayer.dataset.active = "false";
+                    crossesPlayer.dataset.active = "true";
+                    crossesPlayer.style.backgroundColor = "red"
+                    noughtsPlayer.style.backgroundColor = "white";
+                    checkScore();
+                }
+
+                else if (crossesPlayer.dataset.active === "true" && gameButtons[i].textContent === "") {
+                    gameButtons[i].textContent = "X";
+                    newBoard.array[i] = "X"
+                    noughtsPlayer.dataset.active = "true";
+                    crossesPlayer.dataset.active = "false";
+                    crossesPlayer.style.backgroundColor = "white"
+                    noughtsPlayer.style.backgroundColor = "red";
+                    checkScore()
+                }
+            }
+            
+            else if (winState === true) {
+                let resetButton = document.createElement('button');
+                resetButton.classList = ".reset-button";
+                resetButton.textContent = "Reset game";
+                resetSection.appendChild(resetButton);
+
+                resetButton.addEventListener('click', resetBoard())
             }
         })
     }
@@ -193,7 +215,7 @@ function game(playerOne, playerTwo) {
 
     //const turnPurple = 
 
-    return { playerOneName, playerTwoName, checkScore, resetBoard, newBoard }
+    return { playerOneName, playerTwoName, newBoard, checkScore, resetBoard, winState, }
     
 }
 
