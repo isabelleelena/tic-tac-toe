@@ -7,7 +7,8 @@
 let gameboardSection = document.querySelector(".gameboard");
 let noughtsPlayer = document.querySelector(".player-one");
 let crossesPlayer = document.querySelector(".player-two");
-let buttonSection = document.querySelector(".buttons")
+let buttonSection = document.querySelector(".buttons");
+let scoreSection = document.querySelector(".score");
 
 const gameboard = (() => {
 
@@ -33,8 +34,6 @@ const gameboard = (() => {
     return { generateArray };
 
 })();
-
-let newBoard = gameboard.generateArray();
 
 // Now I've got my board, I need to make my players. This should probably be a factory function!
 
@@ -86,53 +85,13 @@ function game(playerOne, playerTwo) {
     const playerOneName = playerOne.playerName;
     const playerTwoName = playerTwo.playerName;
 
-    
-     noughtsPlayer.addEventListener('click', () => {
-         if (noughtsPlayer.dataset.active === "true") {
-             noughtsPlayer.dataset.active = 'false';
-             crossesPlayer.dataset.active = "true";
-             crossesPlayer.style.backgroundColor = "red"
-             noughtsPlayer.style.backgroundColor = "white";
-         }
-         else if (noughtsPlayer.dataset.active === "false") {
-             noughtsPlayer.dataset.active = "true";
-             crossesPlayer.dataset.active = "false";
-             noughtsPlayer.style.backgroundColor = "red"
-             crossesPlayer.style.backgroundColor = "white";
-         }
-     })
-
-     crossesPlayer.addEventListener('click', () => {
-         if (crossesPlayer.dataset.active === 'false') {
-             noughtsPlayer.dataset.active = "false";
-             crossesPlayer.dataset.active = "true";
-             crossesPlayer.style.backgroundColor = "red"
-             noughtsPlayer.style.backgroundColor = "white";
-         }
-         else if (crossesPlayer.dataset.active === 'true') {
-             noughtsPlayer.dataset.active = "true";
-             crossesPlayer.dataset.active = "false";
-             noughtsPlayer.style.backgroundColor = "red"
-             crossesPlayer.style.backgroundColor = "white";
-         }
-     })
-    
-
-    //const checkWhoPlayed = () => {
-      //  buttonSection.addEventListener('click', () => {
-
-        //})
-    //}
-
-    //const play = () => {
-
-        //let playerSquare = document.querySelector("#player-square");
-
-        //playerSquare.addEventListener('click', () => )
-
-    //}
+    const newBoard = gameboard.generateArray();
 
     const checkScore = () => {
+
+        let scoreText = document.createElement('p');
+        scoreSection.appendChild(scoreText);
+
         if ((newBoard[0] === "X" && newBoard[1] === "X" && newBoard[2] === "X") 
             || (newBoard[3] === "X" && newBoard[4] === "X" && newBoard[5] === "X")
             || (newBoard[6] === "X" && newBoard[7] === "X" && newBoard[8] === "X")
@@ -144,12 +103,12 @@ function game(playerOne, playerTwo) {
 
                 if (playerOne.noughtOrCross === "X") {
                     playerOne.increaseScore();
-                    console.log(`Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`);
+                    scoreText.textContent = `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`;
                 }
 
                 else if (playerTwo.noughtOrCross === "X") {
                     playerTwo.increaseScore();
-                    console.log(`Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
+                    scoreText.textContent = `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`;
                 };
 
             }
@@ -165,18 +124,18 @@ function game(playerOne, playerTwo) {
 
                 if (playerOne.noughtOrCross === "0") {
                     playerOne.increaseScore();
-                    console.log(`Well done ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`);
+                    scoreText.textContent = `Well done ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`;
                 }
 
                 else if (playerTwo.noughtOrCross === "0") {
                     playerTwo.increaseScore();
-                    console.log(`Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
+                    scoreText.textContent = `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`;
                 };
             
             }
 
         else {
-            console.log("No one has won yet! Keep playing.")
+            scoreText.textContent = "No one has won yet! Keep playing.";
         }
 
             for (let i = 0; i < newBoard.length; i++) {
@@ -195,22 +154,50 @@ function game(playerOne, playerTwo) {
 
         }
 
-    return { playerOneName, playerTwoName, checkScore, resetBoard, }
+    let gameButtons = document.querySelectorAll(".player-square");
+
+    for (let i = 0; i < gameButtons.length; i++) {
+        gameButtons[i].addEventListener('click', () => {
+
+            if (noughtsPlayer.dataset.active === "true" && gameButtons[i].textContent === "") {
+                gameButtons[i].textContent = "0";
+                newBoard[i] = "0";
+                noughtsPlayer.dataset.active = "false";
+                crossesPlayer.dataset.active = "true";
+                crossesPlayer.style.backgroundColor = "red"
+                noughtsPlayer.style.backgroundColor = "white";
+                checkScore();
+            }
+
+            else if (crossesPlayer.dataset.active === "true" && gameButtons[i].textContent === "") {
+                gameButtons[i].textContent = "X";
+                newBoard[i] = "X"
+                noughtsPlayer.dataset.active = "true";
+                crossesPlayer.dataset.active = "false";
+                crossesPlayer.style.backgroundColor = "white"
+                noughtsPlayer.style.backgroundColor = "red";
+                checkScore()
+            }
+        })
+    }
+
+    //let playerButtonOne = document.querySelector('[data-number="0"]');
+    //let playerButtonTwo = document.querySelector('[data-number="1"]');
+    //let playerButtonThree = document.querySelector('[data-number="2"]');
+    //let playerButtonFour = document.querySelector('[data-number="3"]');
+    //let playerButtonFive = document.querySelector('[data-number="4"]');
+    //let playerButtonSix = document.querySelector('[data-number="5"]');
+    //let playerButtonSeven = document.querySelector('[data-number="6"]');
+    //let playerButtonEight = document.querySelector('[data-number="7"]');
+    //let playerButtonNine = document.querySelector('[data-number="8"]');
+
+    //const turnPurple = 
+
+    return { playerOneName, playerTwoName, checkScore, resetBoard, newBoard }
     
 }
 
 let newGame = game(izzy, dan);
-
-newBoard[2] = "0"
-newBoard[3] = "X"
-newBoard[4] = "X"
-newBoard[7] = "X"
-newBoard[8] = "X"
-newBoard[2] = "0"
-newBoard[3] = "X"
-newBoard[4] = "X"
-newBoard[7] = "X"
-newBoard[8] = "X"
 
 
 // functionality that checks player's score
