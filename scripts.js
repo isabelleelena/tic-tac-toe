@@ -4,12 +4,16 @@
 // the game board should be a grid 
 // we need two players who are randomly assigned either noughts or crosses 
 
+// The DOM nodes I need to access
+
 let gameboardSection = document.querySelector(".gameboard");
 let noughtsPlayer = document.querySelector(".player-one");
 let crossesPlayer = document.querySelector(".player-two");
 let buttonSection = document.querySelector(".buttons");
 let scoreSection = document.querySelector(".score");
 let resetSection = document.querySelector(".reset")
+
+// The function that generates the gameboard
 
 const gameboard = (() => {
 
@@ -36,7 +40,7 @@ const gameboard = (() => {
 
 })();
 
-// Now I've got my board, I need to make my players. This should probably be a factory function!
+// The function that generates the player, assigns them a piece, and gets and increases their score
 
 function createPlayer(name, number, piece) {
 
@@ -70,15 +74,11 @@ function createPlayer(name, number, piece) {
 let izzy = createPlayer("izzy", "1", "0");
 let dan = createPlayer("dan", 2, "X")
 
-// How to play the game?
-
-// First, each player needs to be able to place a piece on the board
-
-// Then, as each piece is placed, the game needs to check if there are three of the same piece in a row
-
-// If there are not, the game continues
+// The function that creates the game
 
 function game(playerOne, playerTwo) {
+
+    // Here we're creating our two player instances
 
     createPlayer(playerOne);
     createPlayer(playerTwo);
@@ -90,6 +90,41 @@ function game(playerOne, playerTwo) {
 
     let winState = false;
 
+    // this function resets the board
+
+    const resetBoard = () => {
+
+        for (let i = 0; i < newBoard.array.length; i++) {
+            newBoard.array[i] = '';
+        }
+
+        for (let i = 0; i < gameButtons.length; i++) {
+            gameButtons[i].textContent = '';
+        }
+
+        scoreSection.replaceChildren();
+
+        winState = false;
+
+        noughtsPlayer.dataset.active = "true";
+        crossesPlayer.dataset.active = "false";
+        crossesPlayer.style.backgroundColor = "white"
+        noughtsPlayer.style.backgroundColor = "red";
+
+        return newBoard;
+
+    }
+
+    // section that creates the reset button
+
+    let resetButton = document.createElement('button');
+    resetButton.classList = ".reset-button";
+    resetButton.textContent = "Reset game";
+    resetSection.appendChild(resetButton);
+    resetButton.addEventListener('click', resetBoard);
+
+    // This is the function where we check the score and change the win state depending on how the game is being played
+
     const checkScore = () => {
 
         let scoreText = document.createElement('p');
@@ -99,6 +134,7 @@ function game(playerOne, playerTwo) {
             || (newBoard.array[3] === "X" && newBoard.array[4] === "X" && newBoard.array[5] === "X")
             || (newBoard.array[6] === "X" && newBoard.array[7] === "X" && newBoard.array[8] === "X")
             || (newBoard.array[0] === "X" && newBoard.array[3] === "X" && newBoard.array[6] === "X")
+            || (newBoard.array[1] === "X" && newBoard.array[4] === "X" && newBoard.array[7] === "X")
             || (newBoard.array[4] === "X" && newBoard.array[7] === "X" && newBoard.array[3] === "X")
             || (newBoard.array[2] === "X" && newBoard.array[5] === "X" && newBoard.array[8] === "X")
             || (newBoard.array[0] === "X" && newBoard.array[4] === "X" && newBoard.array[8] === "X")
@@ -122,6 +158,7 @@ function game(playerOne, playerTwo) {
             || (newBoard.array[3] === "0" && newBoard.array[4] === "0" && newBoard.array[5] === "0")
             || (newBoard.array[6] === "0" && newBoard.array[7] === "0" && newBoard.array[8] === "0")
             || (newBoard.array[0] === "0" && newBoard.array[3] === "0" && newBoard.array[6] === "0")
+            || (newBoard.array[1] === "0" && newBoard.array[4] === "0" && newBoard.array[7] === "0")
             || (newBoard.array[4] === "0" && newBoard.array[7] === "0" && newBoard.array[3] === "0")
             || (newBoard.array[2] === "0" && newBoard.array[5] === "0" && newBoard.array[8] === "0")
             || (newBoard.array[0] === "0" && newBoard.array[4] === "0" && newBoard.array[8] === "0")
@@ -150,21 +187,7 @@ function game(playerOne, playerTwo) {
 
     let gameButtons = document.querySelectorAll(".player-square");
 
-     const resetBoard = () => {
-
-            for (let i = 0; i < newBoard.length; i++) {
-                newBoard[i] = '';
-            }
-
-            for (let i = 0; i < gameButtons.length; i++) {
-                gameButtons[i].textContent = '';
-            }
-
-            scoreSection.replaceChildren();
-
-            return newBoard;
-
-        }
+    // This for loop allows the game to be playable
 
     for (let i = 0; i < gameButtons.length; i++) {
         gameButtons[i].addEventListener('click', () => {
@@ -191,29 +214,8 @@ function game(playerOne, playerTwo) {
                     checkScore()
                 }
             }
-            
-            else if (winState === true) {
-                let resetButton = document.createElement('button');
-                resetButton.classList = ".reset-button";
-                resetButton.textContent = "Reset game";
-                resetSection.appendChild(resetButton);
-
-                resetButton.addEventListener('click', resetBoard())
-            }
         })
     }
-
-    //let playerButtonOne = document.querySelector('[data-number="0"]');
-    //let playerButtonTwo = document.querySelector('[data-number="1"]');
-    //let playerButtonThree = document.querySelector('[data-number="2"]');
-    //let playerButtonFour = document.querySelector('[data-number="3"]');
-    //let playerButtonFive = document.querySelector('[data-number="4"]');
-    //let playerButtonSix = document.querySelector('[data-number="5"]');
-    //let playerButtonSeven = document.querySelector('[data-number="6"]');
-    //let playerButtonEight = document.querySelector('[data-number="7"]');
-    //let playerButtonNine = document.querySelector('[data-number="8"]');
-
-    //const turnPurple = 
 
     return { playerOneName, playerTwoName, newBoard, checkScore, resetBoard, winState, }
     
@@ -222,25 +224,3 @@ function game(playerOne, playerTwo) {
 let newGame = game(izzy, dan);
 
 
-// functionality that checks player's score
-
-
-
-
-// random assignment of piece 
-
-
-    //const noughtOrCross = () => {
-//
-  //      let randomInt = Math.floor(Math.random() * 2) + 1;
-    //    let playerPiece
-//
-  //      if (randomInt === 1) {
-    //        playerPiece = "nought";
-      //      return { playerPiece };
-        //}
-//        else if (randomInt === 2) {
-  //          playerPiece = "cross";
-    //        return { playerPiece };
-      //  }
-    //}
