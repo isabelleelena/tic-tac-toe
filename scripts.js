@@ -5,12 +5,13 @@ let noughtsPlayer = document.querySelector(".player-one");
 let crossesPlayer = document.querySelector(".player-two");
 let buttonSection = document.querySelector(".buttons");
 let scoreSection = document.querySelector(".score");
-let resetSection = document.querySelector(".reset");
+let resetGameboardSection = document.querySelector(".reset-gameboard");
 let playerInputs = document.querySelector(".player-inputs");
 let playerOneInfo = document.querySelector("#first-player");
 let playerTwoInfo = document.querySelector('#second-player');
 let submitButton = document.querySelector('[type="submit"]');
 let playerInfo = document.querySelector('.player-information');
+let resetWholeGameButton = document.querySelector('.reset-whole-game');
 
 const startGame = submitButton.addEventListener('click', (e) => {
         
@@ -136,7 +137,7 @@ function game(firstPlayer, secondPlayer) {
     let resetButton = document.createElement('button');
     resetButton.classList = ".reset-button";
     resetButton.textContent = "Reset game";
-    resetSection.appendChild(resetButton);
+    resetGameboardSection.appendChild(resetButton);
     resetButton.addEventListener('click', resetBoard);
 
     // This is the function where we check the score and change the win state depending on how the game is being played
@@ -236,6 +237,10 @@ function game(firstPlayer, secondPlayer) {
     return { playerOneName, playerTwoName, newBoard, checkScore, resetBoard, winState, }
     
 }
+
+resetWholeGameButton.addEventListener('click', () => {
+    location.reload();
+})
 
 
 
