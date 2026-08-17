@@ -136,7 +136,7 @@ function game(firstPlayer, secondPlayer) {
 
     let resetButton = document.createElement('button');
     resetButton.classList = ".reset-button";
-    resetButton.textContent = "Reset game";
+    resetButton.textContent = "Reset board";
     resetGameboardSection.appendChild(resetButton);
     resetButton.addEventListener('click', resetBoard);
 
