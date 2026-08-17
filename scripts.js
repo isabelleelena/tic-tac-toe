@@ -195,8 +195,15 @@ function game(firstPlayer, secondPlayer) {
             }
 
         else {
-            winState = false;
-            scoreSection.replaceChildren(scoreText, "No one has won yet! Keep playing.");
+
+            if (newBoard.array.every(item => item !== "")) {
+                scoreSection.replaceChildren(scoreText, "It's a draw! Reset board to keep playing.");
+            }
+
+            else {
+                winState = false;
+                scoreSection.replaceChildren(scoreText, "No one has won yet! Keep playing.");
+            }
         }
 
         }
