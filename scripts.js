@@ -5,7 +5,22 @@ let noughtsPlayer = document.querySelector(".player-one");
 let crossesPlayer = document.querySelector(".player-two");
 let buttonSection = document.querySelector(".buttons");
 let scoreSection = document.querySelector(".score");
-let resetSection = document.querySelector(".reset")
+let resetSection = document.querySelector(".reset");
+let playerInputs = document.querySelector(".player-inputs");
+let playerOneInfo = document.querySelector("#first-player");
+let playerTwoInfo = document.querySelector('#second-player');
+let submitButton = document.querySelector('[type="submit"]');
+
+const startGame = submitButton.addEventListener('click', (e) => {
+        
+        e.preventDefault();
+
+        let firstInput = playerOneInfo.value;
+        let secondInput = playerTwoInfo.value;
+        
+        let newGame = game(firstInput, secondInput);
+    }
+)
 
 // The function that generates the gameboard
 
@@ -63,19 +78,14 @@ function createPlayer(name, number, piece) {
     return { playerName, getScore, increaseScore, noughtOrCross, };
 }
 
-// current players
-
-let izzy = createPlayer("izzy", "1", "0");
-let dan = createPlayer("dan", 2, "X")
-
 // The function that creates the game
 
-function game(playerOne, playerTwo) {
+function game(firstPlayer, secondPlayer) {
 
     // Here we're creating our two player instances
 
-    createPlayer(playerOne);
-    createPlayer(playerTwo);
+    let playerOne = createPlayer(`${firstPlayer}`, "1", "0");
+    let playerTwo = createPlayer(`${secondPlayer}`, "2", "X");
 
     const playerOneName = playerOne.playerName;
     const playerTwoName = playerTwo.playerName;
@@ -215,6 +225,5 @@ function game(playerOne, playerTwo) {
     
 }
 
-let newGame = game(izzy, dan);
 
 
