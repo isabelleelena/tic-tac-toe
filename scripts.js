@@ -10,6 +10,7 @@ let playerInputs = document.querySelector(".player-inputs");
 let playerOneInfo = document.querySelector("#first-player");
 let playerTwoInfo = document.querySelector('#second-player');
 let submitButton = document.querySelector('[type="submit"]');
+let playerInfo = document.querySelector('.player-information');
 
 const startGame = submitButton.addEventListener('click', (e) => {
         
@@ -17,8 +18,19 @@ const startGame = submitButton.addEventListener('click', (e) => {
 
         let firstInput = playerOneInfo.value;
         let secondInput = playerTwoInfo.value;
-        
+
+        let playerOneAnnouncement = document.createElement('p');
+        playerOneAnnouncement.textContent = `Player One: ${firstInput}, piece: 0`;
+        playerInfo.appendChild(playerOneAnnouncement);
+        let playerTwoAnnouncement = document.createElement('p');
+        playerTwoAnnouncement.textContent = `Player Two: ${secondInput}, piece: X`;
+        playerInfo.appendChild(playerTwoAnnouncement)
+
         let newGame = game(firstInput, secondInput);
+
+        playerOneInfo.value = '';
+        playerTwoInfo.value = '';
+
     }
 )
 
