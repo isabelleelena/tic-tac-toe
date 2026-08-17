@@ -145,7 +145,6 @@ function game(firstPlayer, secondPlayer) {
     const checkScore = () => {
 
         let scoreText = document.createElement('p');
-        scoreSection.appendChild(scoreText);
 
         if ((newBoard.array[0] === "X" && newBoard.array[1] === "X" && newBoard.array[2] === "X") 
             || (newBoard.array[3] === "X" && newBoard.array[4] === "X" && newBoard.array[5] === "X")
@@ -161,12 +160,12 @@ function game(firstPlayer, secondPlayer) {
 
                 if (playerOne.noughtOrCross === "X") {
                     playerOne.increaseScore();
-                    scoreText.textContent = `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`; 
+                    scoreSection.replaceChildren(scoreText, `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`); 
                 }
 
                 else if (playerTwo.noughtOrCross === "X") {
                     playerTwo.increaseScore();
-                    scoreText.textContent = `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`;
+                    scoreSection.replaceChildren(scoreText, `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
                 };
 
             }
@@ -185,19 +184,19 @@ function game(firstPlayer, secondPlayer) {
 
                 if (playerOne.noughtOrCross === "0") {
                     playerOne.increaseScore();
-                    scoreText.textContent = `Well done ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`;
+                    scoreSection.replaceChildren(scoreText, `Well done ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`);
                 }
 
                 else if (playerTwo.noughtOrCross === "0") {
                     playerTwo.increaseScore();
-                    scoreText.textContent = `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`;
+                    scoreSection.replaceChildren(scoreText, `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
                 };
             
             }
 
         else {
             winState = false;
-            scoreText.textContent = "No one has won yet! Keep playing.";
+            scoreSection.replaceChildren(scoreText, "No one has won yet! Keep playing.");
         }
 
         }
