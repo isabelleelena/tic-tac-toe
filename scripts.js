@@ -1,9 +1,3 @@
-// What we need is a game board that allows us to click parts of the board to lay down noughts or crosses
-// Each time a piece is played, it must check how many of itself are near it to determine if hte game is won or not
-
-// the game board should be a grid 
-// we need two players who are randomly assigned either noughts or crosses 
-
 // The DOM nodes I need to access
 
 let gameboardSection = document.querySelector(".gameboard");
