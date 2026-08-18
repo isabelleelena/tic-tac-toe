@@ -1,22 +1,15 @@
 // The DOM nodes I need to access
 
 let gameboardSection = document.querySelector(".gameboard");
-let noughtsPlayer = document.querySelector(".player-one");
-let crossesPlayer = document.querySelector(".player-two");
-let buttonSection = document.querySelector(".buttons");
 let scoreSection = document.querySelector(".score");
 let resetGameboardSection = document.querySelector(".reset-gameboard");
 let playerInputs = document.querySelector(".player-inputs");
 let playerOneInfo = document.querySelector("#first-player");
 let playerTwoInfo = document.querySelector('#second-player');
 let submitButton = document.querySelector('[type="submit"]');
-let playerInfo = document.querySelector('.player-information');
 let resetWholeGameButton = document.querySelector('.reset-whole-game');
-let errorSection = document.querySelector('.error-section');
 
 gameboardSection.dataset.active = "false";
-errorSection.dataset.active = 'false';
-playerInfo.dataset.active = 'false';
 
 const startGame = submitButton.addEventListener('click', (e) => {
         
@@ -24,7 +17,13 @@ const startGame = submitButton.addEventListener('click', (e) => {
 
         if (playerOneInfo.value === "" || playerTwoInfo.value === "") {
 
+            playerInputs.dataset.state = "error";
+
             if (document.querySelector('.error-message') === null) {
+
+                let errorSection = document.createElement('div');
+                errorSection.classList = "error-section";
+                playerInputs.appendChild(errorSection);
 
                 errorSection.dataset.active = "true"
                 let errorMessage = document.createElement('p');
@@ -42,13 +41,16 @@ const startGame = submitButton.addEventListener('click', (e) => {
 
         else {
 
-            if (document.querySelector('.error-message') !== null) {
-                let errorMessage = document.querySelector(".error-message");
-                errorMessage.remove();
-            }
+            playerInputs.dataset.state = "game";
 
-            errorSection.dataset.active = "false";
-            playerInfo.dataset.active = "true";
+            if (document.querySelector('.error-message') !== null) {
+                let errorSection = document.querySelector(".error-section");
+                errorSection.remove();
+            }
+            
+            let playerInfo = document.createElement('div');
+            playerInfo.classList = "player-information";
+            playerInputs.appendChild(playerInfo);
 
             let firstInput = playerOneInfo.value;
             let secondInput = playerTwoInfo.value;
@@ -106,19 +108,6 @@ function createPlayer(name, number, piece) {
 
     const noughtOrCross = piece;
 
-    if (piece === "0") {
-        noughtsPlayer.id = `${name}`;
-    }
-
-    else if (piece === "X") {
-        crossesPlayer.id = `${name}`;
-    };
-
-    noughtsPlayer.dataset.active = "true";
-    noughtsPlayer.style.backgroundColor = "red";
-    crossesPlayer.dataset.active = "false";
-    crossesPlayer.style.backgroundColor = "white";
-
     let score = 0
 
     const getScore = () => score;
@@ -140,6 +129,27 @@ function game(firstPlayer, secondPlayer) {
     const playerTwoName = playerTwo.playerName;
 
     const newBoard = gameboard.generateArray();
+
+    let noughtsPlayer = document.createElement("button");
+    let crossesPlayer = document.createElement("button");
+    let buttonSection = document.createElement("div");
+    noughtsPlayer.classList = "player-one";
+    noughtsPlayer.textContent = "Player One: Noughts"
+    crossesPlayer.classList = "player-two";
+    crossesPlayer.textContent = "Player Two: Crosses"
+    buttonSection.classList = 'buttons';
+    playerInputs.appendChild(buttonSection);
+    buttonSection.appendChild(noughtsPlayer);
+    buttonSection.appendChild(crossesPlayer);
+
+    noughtsPlayer.id = playerOne.playerName;
+
+    crossesPlayer.id = playerTwo.playerName;
+
+    noughtsPlayer.dataset.active = "true";
+    noughtsPlayer.style.backgroundColor = "red";
+    crossesPlayer.dataset.active = "false";
+    crossesPlayer.style.backgroundColor = "white";
 
     let tally = document.createElement('div');
     tally.classList = "tally";
@@ -184,7 +194,7 @@ function game(firstPlayer, secondPlayer) {
     // section that creates the reset button
 
     let resetButton = document.createElement('button');
-    resetButton.classList = ".reset-button";
+    resetButton.classList = "reset-button";
     resetButton.textContent = "Reset board";
     resetGameboardSection.appendChild(resetButton);
     resetButton.addEventListener('click', resetBoard);
