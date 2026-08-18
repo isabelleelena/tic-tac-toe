@@ -12,26 +12,62 @@ let playerTwoInfo = document.querySelector('#second-player');
 let submitButton = document.querySelector('[type="submit"]');
 let playerInfo = document.querySelector('.player-information');
 let resetWholeGameButton = document.querySelector('.reset-whole-game');
+let errorSection = document.querySelector('.error-section');
+
+gameboardSection.dataset.active = "false";
+errorSection.dataset.active = 'false';
+playerInfo.dataset.active = 'false';
 
 const startGame = submitButton.addEventListener('click', (e) => {
         
         e.preventDefault();
 
-        let firstInput = playerOneInfo.value;
-        let secondInput = playerTwoInfo.value;
+        if (playerOneInfo.value === "" || playerTwoInfo.value === "") {
 
-        let playerOneAnnouncement = document.createElement('p');
-        playerOneAnnouncement.textContent = `Player One: ${firstInput}, piece: 0`;
-        playerInfo.appendChild(playerOneAnnouncement);
-        let playerTwoAnnouncement = document.createElement('p');
-        playerTwoAnnouncement.textContent = `Player Two: ${secondInput}, piece: X`;
-        playerInfo.appendChild(playerTwoAnnouncement)
+            if (document.querySelector('.error-message') === null) {
 
-        let newGame = game(firstInput, secondInput);
+                errorSection.dataset.active = "true"
+                let errorMessage = document.createElement('p');
+                errorMessage.classList = "error-message";
+                errorMessage.textContent = "Please input two player names before creating the game."
+                errorSection.appendChild(errorMessage);
 
-        playerOneInfo.value = '';
-        playerTwoInfo.value = '';
+            }
+            
+            else {
+                let errorMessage = document.querySelector(".error-message");
+                errorMessage.textContent = "PLEASE input two player names before creating the game."
+            };
+        }
 
+        else {
+
+            if (document.querySelector('.error-message') !== null) {
+                let errorMessage = document.querySelector(".error-message");
+                errorMessage.remove();
+            }
+
+            errorSection.dataset.active = "false";
+            playerInfo.dataset.active = "true";
+
+            let firstInput = playerOneInfo.value;
+            let secondInput = playerTwoInfo.value;
+
+            let playerOneAnnouncement = document.createElement('p');
+            playerOneAnnouncement.textContent = `Player One: ${firstInput}, piece: 0`;
+            playerInfo.appendChild(playerOneAnnouncement);
+            let playerTwoAnnouncement = document.createElement('p');
+            playerTwoAnnouncement.textContent = `Player Two: ${secondInput}, piece: X`;
+            playerInfo.appendChild(playerTwoAnnouncement)
+
+            let newGame = game(firstInput, secondInput);
+
+            playerOneInfo.value = '';
+            playerTwoInfo.value = '';
+
+            gameboardSection.dataset.active = "true";
+
+        }
     }
 )
 
@@ -105,6 +141,19 @@ function game(firstPlayer, secondPlayer) {
 
     const newBoard = gameboard.generateArray();
 
+    let tally = document.createElement('div');
+    tally.classList = "tally";
+    gameboardSection.appendChild(tally);
+
+    let tallyInfoPlayerOne = document.createElement('p');
+    tallyInfoPlayerOne.classList = "tally-info-one";
+    tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
+    let tallyInfoPlayerTwo = document.createElement('p');
+    tallyInfoPlayerTwo.classList = "tally-info-two";
+    tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
+    tally.appendChild(tallyInfoPlayerOne);
+    tally.appendChild(tallyInfoPlayerTwo);
+
     let winState = false;
 
     // this function resets the board
@@ -161,11 +210,15 @@ function game(firstPlayer, secondPlayer) {
                 if (playerOne.noughtOrCross === "X") {
                     playerOne.increaseScore();
                     scoreSection.replaceChildren(scoreText, `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`); 
+                    tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
+                    tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 }
 
                 else if (playerTwo.noughtOrCross === "X") {
                     playerTwo.increaseScore();
                     scoreSection.replaceChildren(scoreText, `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
+                    tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
+                    tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 };
 
             }
@@ -185,11 +238,15 @@ function game(firstPlayer, secondPlayer) {
                 if (playerOne.noughtOrCross === "0") {
                     playerOne.increaseScore();
                     scoreSection.replaceChildren(scoreText, `Well done ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`);
+                    tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
+                    tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 }
 
                 else if (playerTwo.noughtOrCross === "0") {
                     playerTwo.increaseScore();
                     scoreSection.replaceChildren(scoreText, `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
+                    tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
+                    tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 };
             
             }
