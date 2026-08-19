@@ -196,7 +196,6 @@ button[data-active="false"] {
 
 .gameboard[data-active="true"] {
 	display: grid;
-    grid-template-columns: 1fr 440px 1fr;
     grid-template-rows: 440px 50px 50px 50px;
     align-items: center;
     gap: 40px;
@@ -234,4 +233,10 @@ button[data-active="false"] {
     gap: 20px;
     justify-content: center;
     grid-template-rows: 50px;
+}
+
+.gameboard-mid-section {
+	display: grid;
+    grid-template-columns: 1fr 440px 1fr;
+    grid-column: 1 / 4;
 }

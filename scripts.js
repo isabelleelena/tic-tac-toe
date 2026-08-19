@@ -79,9 +79,12 @@ const gameboard = (() => {
 
     const generateArray = () => {
 
+        let gameboardMidSection = document.createElement('div');
+        gameboardMidSection.classList = "gameboard-mid-section";
+        gameboardSection.appendChild(gameboardMidSection);
         let playerBoard = document.createElement('div');
         playerBoard.classList = "player-board";
-        gameboardSection.appendChild(playerBoard);
+        gameboardMidSection.appendChild(playerBoard);
 
         array = ['', '', '', '', '', '', '', '', ''];
 
@@ -153,9 +156,10 @@ function game(firstPlayer, secondPlayer) {
     noughtsPlayer.dataset.active = "true";
     crossesPlayer.dataset.active = "false";
 
+    let gameboardMidSection = document.querySelector(".gameboard-mid-section");
     let tally = document.createElement('div');
     tally.classList = "tally";
-    gameboardSection.appendChild(tally);
+    gameboardMidSection.appendChild(tally);
 
     let tallyInfoPlayerOne = document.createElement('p');
     tallyInfoPlayerOne.classList = "tally-info-one";
