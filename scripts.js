@@ -8,6 +8,7 @@ let playerOneInfo = document.querySelector("#first-player");
 let playerTwoInfo = document.querySelector('#second-player');
 let submitButton = document.querySelector('[type="submit"]');
 let resetWholeGameButton = document.querySelector('.reset-whole-game');
+let container = document.querySelector(".container");
 
 gameboardSection.dataset.active = "false";
 
@@ -125,6 +126,8 @@ function createPlayer(name, number, piece) {
 function game(firstPlayer, secondPlayer) {
 
     // Here we're creating our two player instances
+
+    container.dataset.active = "true";
 
     let playerOne = createPlayer(`${firstPlayer}`, "1", "0");
     let playerTwo = createPlayer(`${secondPlayer}`, "2", "X");

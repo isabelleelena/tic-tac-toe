@@ -198,7 +198,9 @@ button[data-active="false"] {
 
 .gameboard[data-active="true"] {
 	display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 440px 1fr;
+    align-items: center;
+    gap: 40px;
 }
 
 .tally {
@@ -208,4 +210,20 @@ button[data-active="false"] {
     font-weight: bold;
     color: #f1faee;
     grid-template-rows: 40px 40px;
+}
+
+.score {
+	color: #f1faee;
+    line-height: 1.5;
+    font-size: 20px;
+    padding: 10px;
+    display: grid;
+    justify-content: center;
+}
+
+.reset-gameboard {
+	display: grid;
+    justify-content: center;
+    grid-template-columns: 150px;
+    grid-template-rows: 48px;
 }
