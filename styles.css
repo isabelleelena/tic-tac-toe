@@ -62,11 +62,16 @@ body {
 	height: 100vh;
 }
 
-.gameboard {
+.player-board {
     display: grid;
-    grid-template-columns: repeat(3, 30px);
-    grid-template-rows: repeat(3, 30px);
-    gap: 2px;
+    grid-template-columns: repeat(3, 120px);
+    grid-template-rows: repeat(3, 120px);
+    gap: 20px;
+    gap: 20px;
+    background-color: #e63946;
+    width: 400px;
+    padding: 20px;
+	grid-column: 2 / 3;
 }
 
 [data-state="pregame"] {
@@ -125,10 +130,6 @@ h1 {
 	grid-column: 1 / 4;
 }
 
-[data-active="false"] {
-	height: 0px;
-}
-
 .reset-whole-game-section {
 	display: grid;
     grid-template-columns: 170px;
@@ -144,6 +145,14 @@ h1 {
 	gap: 20px;
 }
 
+[data-state="error"] {
+	display: grid;
+	grid-template-columns: 250px 250px 150px;
+	grid-template-rows: 50px 80px;
+	justify-content: center;
+	gap: 20px;
+}
+
 .player-information {
 	grid-column: 1 / 4;
 	color: #f1faee;
@@ -152,4 +161,51 @@ h1 {
     padding: 10px;
     display: grid;
     justify-content: center;
+}
+
+.error-section {
+	grid-column: 1 / 4;
+    color: #f1faee;
+    line-height: 1.5;
+    font-size: 20px;
+    padding: 10px;
+    display: grid;
+    justify-content: center;
+}
+
+button[data-active="true"] {
+	background-color: #e63946;
+	color: #f1faee;
+}
+
+button[data-active="false"] {
+	background-color: #f1faee;
+	color: #e63946;
+}
+
+.gameboard[data-active="false"] {
+	height: 0px;
+}
+
+.player-square {
+	border-radius: 15px;
+    border: 0px;
+    background-color: #f1faee;
+    color: #1d3557;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.gameboard[data-active="true"] {
+	display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+}
+
+.tally {
+	display: grid;
+    align-items: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #f1faee;
+    grid-template-rows: 40px 40px;
 }

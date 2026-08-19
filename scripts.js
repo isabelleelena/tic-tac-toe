@@ -81,6 +81,10 @@ const gameboard = (() => {
 
     const generateArray = () => {
 
+        let playerBoard = document.createElement('div');
+        playerBoard.classList = "player-board";
+        gameboardSection.appendChild(playerBoard);
+
         array = ['', '', '', '', '', '', '', '', ''];
 
         for (let i = 0; i < array.length; i++) {
@@ -88,7 +92,7 @@ const gameboard = (() => {
             let playerSquare = document.createElement("button");
             playerSquare.classList = "player-square";
             playerSquare.dataset.number = `${i}`;
-            gameboardSection.appendChild(playerSquare);
+            playerBoard.appendChild(playerSquare);
 
         }
         
@@ -147,9 +151,7 @@ function game(firstPlayer, secondPlayer) {
     crossesPlayer.id = playerTwo.playerName;
 
     noughtsPlayer.dataset.active = "true";
-    noughtsPlayer.style.backgroundColor = "red";
     crossesPlayer.dataset.active = "false";
-    crossesPlayer.style.backgroundColor = "white";
 
     let tally = document.createElement('div');
     tally.classList = "tally";
@@ -184,8 +186,6 @@ function game(firstPlayer, secondPlayer) {
 
         noughtsPlayer.dataset.active = "true";
         crossesPlayer.dataset.active = "false";
-        crossesPlayer.style.backgroundColor = "white"
-        noughtsPlayer.style.backgroundColor = "red";
 
         return newBoard;
 
@@ -289,8 +289,6 @@ function game(firstPlayer, secondPlayer) {
                     newBoard.array[i] = "0";
                     noughtsPlayer.dataset.active = "false";
                     crossesPlayer.dataset.active = "true";
-                    crossesPlayer.style.backgroundColor = "red"
-                    noughtsPlayer.style.backgroundColor = "white";
                     checkScore();
                 }
 
@@ -299,8 +297,6 @@ function game(firstPlayer, secondPlayer) {
                     newBoard.array[i] = "X"
                     noughtsPlayer.dataset.active = "true";
                     crossesPlayer.dataset.active = "false";
-                    crossesPlayer.style.backgroundColor = "white"
-                    noughtsPlayer.style.backgroundColor = "red";
                     checkScore()
                 }
             }
