@@ -130,11 +130,9 @@ h1 {
 	grid-column: 1 / 4;
 }
 
-.reset-whole-game-section {
-	display: grid;
-    grid-template-columns: 170px;
-    grid-template-rows: 50px;
-    justify-content: center;
+.reset-whole-game {
+	height: 50px;
+    width: 210px;
 }
 
 [data-state="game"] {
@@ -199,6 +197,7 @@ button[data-active="false"] {
 .gameboard[data-active="true"] {
 	display: grid;
     grid-template-columns: 1fr 440px 1fr;
+    grid-template-rows: 440px 50px 50px 50px;
     align-items: center;
     gap: 40px;
 }
@@ -219,11 +218,20 @@ button[data-active="false"] {
     padding: 10px;
     display: grid;
     justify-content: center;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
 }
 
-.reset-gameboard {
-	display: grid;
+.reset-button {
+	height: 50px;
+    width: 210px;
+}
+
+.all-resets {
+	grid-column: 2 / 3;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
     justify-content: center;
-    grid-template-columns: 150px;
-    grid-template-rows: 48px;
+    grid-template-rows: 50px;
 }

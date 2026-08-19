@@ -1,13 +1,10 @@
 // The DOM nodes I need to access
 
 let gameboardSection = document.querySelector(".gameboard");
-let scoreSection = document.querySelector(".score");
-let resetGameboardSection = document.querySelector(".reset-gameboard");
 let playerInputs = document.querySelector(".player-inputs");
 let playerOneInfo = document.querySelector("#first-player");
 let playerTwoInfo = document.querySelector('#second-player');
 let submitButton = document.querySelector('[type="submit"]');
-let resetWholeGameButton = document.querySelector('.reset-whole-game');
 let container = document.querySelector(".container");
 
 gameboardSection.dataset.active = "false";
@@ -173,6 +170,15 @@ function game(firstPlayer, secondPlayer) {
 
     // this function resets the board
 
+    let allResets = document.createElement('div');
+    allResets.classList = "all-resets";
+    gameboardSection.appendChild(allResets);
+    let resetGameboardSection = document.createElement('div');
+    resetGameboardSection.classList = "reset-gameboard";
+    allResets.appendChild(resetGameboardSection)
+
+    gameboardSection.appendChild(allResets);
+
     const resetBoard = () => {
 
         for (let i = 0; i < newBoard.array.length; i++) {
@@ -204,9 +210,15 @@ function game(firstPlayer, secondPlayer) {
 
     // This is the function where we check the score and change the win state depending on how the game is being played
 
-    const checkScore = () => {
+    let scoreSection = document.createElement('div');
+    scoreSection.classList = "score";
+    gameboardSection.appendChild(scoreSection);
+    let scoreText = document.createElement('p');
+    scoreSection.appendChild(scoreText);
+    scoreText.textContent = "Get playing!";
 
-        let scoreText = document.createElement('p');
+
+    const checkScore = () => {
 
         if ((newBoard.array[0] === "X" && newBoard.array[1] === "X" && newBoard.array[2] === "X") 
             || (newBoard.array[3] === "X" && newBoard.array[4] === "X" && newBoard.array[5] === "X")
@@ -222,14 +234,14 @@ function game(firstPlayer, secondPlayer) {
 
                 if (playerOne.noughtOrCross === "X") {
                     playerOne.increaseScore();
-                    scoreSection.replaceChildren(scoreText, `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`); 
+                    scoreText.textContent = `Well done, ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`; 
                     tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
                     tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 }
 
                 else if (playerTwo.noughtOrCross === "X") {
                     playerTwo.increaseScore();
-                    scoreSection.replaceChildren(scoreText, `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
+                    scoreText.textContent = `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`;
                     tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
                     tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 };
@@ -250,14 +262,14 @@ function game(firstPlayer, secondPlayer) {
 
                 if (playerOne.noughtOrCross === "0") {
                     playerOne.increaseScore();
-                    scoreSection.replaceChildren(scoreText, `Well done ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`);
+                    scoreText.textContent = `Well done ${playerOne.playerName}, you win! Your score has increased by 1 and is now ${playerOne.getScore()}`;
                     tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
                     tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 }
 
                 else if (playerTwo.noughtOrCross === "0") {
                     playerTwo.increaseScore();
-                    scoreSection.replaceChildren(scoreText, `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`);
+                    scoreText.textContent = `Well done ${playerTwo.playerName}, you win! Your score has increased by 1 and is now ${playerTwo.getScore()}`;
                     tallyInfoPlayerOne.textContent = `${playerOneName}: ${playerOne.getScore()}`;
                     tallyInfoPlayerTwo.textContent = `${playerTwoName}: ${playerTwo.getScore()}`;
                 };
@@ -272,7 +284,7 @@ function game(firstPlayer, secondPlayer) {
 
             else {
                 winState = false;
-                scoreSection.replaceChildren(scoreText, "No one has won yet! Keep playing.");
+                scoreText.textContent = "No one has won yet! Keep playing.";
             }
         }
 
@@ -306,13 +318,23 @@ function game(firstPlayer, secondPlayer) {
         })
     }
 
+    let resetWholeGameButton = document.createElement('button');
+    resetWholeGameButton.classList = "reset-whole-game";
+    resetWholeGameButton.textContent = "Start New Game"
+    resetWholeGameSection = document.createElement('div');
+    resetWholeGameSection.classList = "reset-whole-game-section";
+    resetWholeGameSection.appendChild(resetWholeGameButton);
+    allResets.appendChild(resetWholeGameSection);
+
+    resetWholeGameButton.addEventListener('click', () => {
+        location.reload();
+    })
+
     return { playerOneName, playerTwoName, newBoard, checkScore, resetBoard, winState, }
     
 }
 
-resetWholeGameButton.addEventListener('click', () => {
-    location.reload();
-})
+
 
 
 
