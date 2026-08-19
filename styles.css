@@ -60,24 +60,25 @@ body {
 	background-color: #1d3557;
 	width: 100vw;
 	height: 100vh;
+	font-family: sans-serif;
 }
 
 .player-board {
     display: grid;
-    grid-template-columns: repeat(3, 120px);
-    grid-template-rows: repeat(3, 120px);
+    grid-template-columns: repeat(3, 190px);
+    grid-template-rows: repeat(3, 190px);
     gap: 20px;
     gap: 20px;
     background-color: #e63946;
-    width: 400px;
+    width: 610px;
     padding: 20px;
 	grid-column: 2 / 3;
 }
 
 [data-state="pregame"] {
 	display: grid;
-    grid-template-columns: 250px 250px 150px;
-    grid-template-rows: 50px;
+    grid-template-columns: 250px 250px 200px;
+    grid-template-rows: 60px;
     gap: 20px;
 	justify-content: center;
 }
@@ -87,7 +88,7 @@ body {
     border: 0px;
     background-color: #f1faee;
 	padding: 15px;
-    font-size: 20px;
+    font-size: 25px;
     color: #457b9d;
 }
 
@@ -96,7 +97,7 @@ button {
     border: 0px;
     background-color: #a8dadc;
     color: #1d3557;
-	font-size: 18px;
+	font-size: 25px;
 }
 
 [type="text"]:focus {
@@ -123,30 +124,30 @@ h1 {
 
 .buttons {
 	display: grid;
-    grid-template-columns: 150px 150px;
-    grid-template-rows: 70px;
+    grid-template-columns: 200px 200px;
+    grid-template-rows: 80px;
     gap: 20px;
     justify-content: center;
-	grid-column: 1 / 4;
+    grid-column: 1 / 4;
 }
 
 .reset-whole-game {
-	height: 50px;
     width: 210px;
+	height: 60px;
 }
 
 [data-state="game"] {
 	display: grid;
-	grid-template-columns: 250px 250px 150px;
-	grid-template-rows: 50px 80px 70px;
-	justify-content: center;
-	gap: 20px;
+    grid-template-columns: 250px 250px 200px;
+    grid-template-rows: 60px 110px 80px;
+    justify-content: center;
+    gap: 20px;
 }
 
 [data-state="error"] {
 	display: grid;
-	grid-template-columns: 250px 250px 150px;
-	grid-template-rows: 50px 80px;
+	grid-template-columns: 250px 250px 200px;
+    grid-template-rows: 60px 110px;
 	justify-content: center;
 	gap: 20px;
 }
@@ -155,7 +156,7 @@ h1 {
 	grid-column: 1 / 4;
 	color: #f1faee;
     line-height: 1.5;
-    font-size: 20px;
+    font-size: 30px;
     padding: 10px;
     display: grid;
     justify-content: center;
@@ -165,7 +166,7 @@ h1 {
 	grid-column: 1 / 4;
     color: #f1faee;
     line-height: 1.5;
-    font-size: 20px;
+    font-size: 30px;
     padding: 10px;
     display: grid;
     justify-content: center;
@@ -174,11 +175,13 @@ h1 {
 button[data-active="true"] {
 	background-color: #e63946;
 	color: #f1faee;
+	font-size: 25px;
 }
 
 button[data-active="false"] {
 	background-color: #f1faee;
 	color: #e63946;
+	font-size: 25px;
 }
 
 .gameboard[data-active="false"] {
@@ -190,16 +193,16 @@ button[data-active="false"] {
     border: 0px;
     background-color: #f1faee;
     color: #1d3557;
-    font-size: 40px;
+    font-size: 80px;
     font-weight: bold;
 }
 
 .gameboard[data-active="true"] {
 	display: grid;
 	grid-template-columns: 1fr 440px 1fr;
-    grid-template-rows: 440px 50px 50px 50px;
+    grid-template-rows: 650px 100px 60px;
     align-items: center;
-    gap: 20px;
+    gap: 40px;
 }
 
 .tally {
@@ -209,12 +212,13 @@ button[data-active="false"] {
     font-weight: bold;
     color: #f1faee;
     grid-template-rows: 40px 40px;
+	gap: 20px;
 }
 
 .score {
 	color: #f1faee;
     line-height: 1.5;
-    font-size: 20px;
+    font-size: 30px;
     padding: 10px;
     display: grid;
     justify-content: center;
@@ -223,7 +227,7 @@ button[data-active="false"] {
 }
 
 .reset-button {
-	height: 50px;
+	height: 60px;
     width: 210px;
 }
 
@@ -238,6 +242,23 @@ button[data-active="false"] {
 
 .gameboard-mid-section {
 	display: grid;
-    grid-template-columns: 1fr 440px 1fr;
+    grid-template-columns: 1fr 660px 1fr;
     grid-column: 1 / 4;
+	gap: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+	display: grid;
+	gap: 40px;
+    padding: 40px;
+	justify-content: center;
+	align-items: center;
+}
+
+.reset-gameboard,
+.reset-whole-game-section {
+	display: grid;
+	justify-content: center;
 }
