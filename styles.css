@@ -196,9 +196,10 @@ button[data-active="false"] {
 
 .gameboard[data-active="true"] {
 	display: grid;
+	grid-template-columns: 1fr 440px 1fr;
     grid-template-rows: 440px 50px 50px 50px;
     align-items: center;
-    gap: 40px;
+    gap: 20px;
 }
 
 .tally {
